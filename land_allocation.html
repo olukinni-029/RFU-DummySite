@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IITA RFU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 900px;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h2 {
+            color: #343a40;
+        }
+        table {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .table thead {
+            background: #343a40;
+            color: white;
+        }
+        .btn-allocate {
+            background: #28a745;
+            color: white;
+            transition: 0.3s;
+        }
+        .btn-allocate:hover {
+            background: #218838;
+        }
+        .btn-back {
+            background: #198754;
+            color: white;
+            transition: 0.3s;
+        }
+        .btn-back:hover {
+            background: #115a38;
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>User Email</th>
+                    <th>Project</th>
+                    <th>Requested Land Size (acres)</th>
+                    <th>Status</th>
+                    <th>Allocate Land</th>
+                </tr>
+            </thead>
+            <tbody id="allocationTableBody">
+                <!-- Requests will be inserted dynamically -->
+            </tbody>
+        </table>
+        
+        <div class="text-center">
+            <button class="btn btn-back w-50 mt-2" onclick="goToDashboard()">Back to Dashboard</button>
+        </div>
+        <!-- <button class="btn btn-primary w-100 mt-3" onclick="confirmAllocation()">Confirm Allocation</button> -->
+        
+        <!-- Back to Dashboard Button -->
+    </div>
+
+    <script>
+        function goToDashboard() {
+            window.location.href = "admin_dashboard.html"; // Redirect to the dashboard page
+        }
+    </script>
+
+    <script src="land_allocation.js"></script>
+</body>
+</html>

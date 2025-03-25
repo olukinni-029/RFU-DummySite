@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IITA RFU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #2c2c2c;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none !important;
+        }
+
+        .navbar a:hover {
+            color: #ccc;
+        }
+
+        .container {
+            flex: 1;
+        }
+
+        .form-container {
+            background: white;
+            color: black;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .btn-primary {
+        background-color: #198754;
+        border: none;
+        padding: 12px;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+      }
+
+      .btn-primary:hover {
+        background-color: #22ad6c;
+      }
+
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #222;
+        color: white;
+        width: 100%;
+      }
+
+      .footer a {
+        text-decoration: none;
+        color: white;
+        margin-left: 15px;
+      }
+
+      .footer a:hover {
+        color: #ccc;
+    }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg px-3">
+        <a class="navbar-brand text-white" href="dashboard.html">IITA RFU</a>
+        <div class="ms-auto">
+            <a href="dashboard.html" class="me-3">Home</a>
+            <a href="#" class="fw-bold">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Form Section -->
+    <div class="container">
+        <div class="form-container">
+            <form id="requestForm" class="mt-4">
+                <h4>General Information</h4>
+                <div class="mb-3">
+                    <label for="year" class="form-label">Year</label>
+                    <input type="number" class="form-control" id="year" required>
+                </div>
+                <div class="mb-3">
+                    <label for="project" class="form-label">Project</label>
+                    <input type="text" class="form-control" id="project" required>
+                </div>
+                <div class="mb-3">
+                    <label for="season" class="form-label">Season</label>
+                    <input type="text" class="form-control" id="season" required>
+                </div>
+                <div class="mb-3">
+                    <label for="budget" class="form-label">Budget</label>
+                    <input type="number" class="form-control" id="budget" required>
+                </div>
+                <div class="mb-3">
+                    <label for="plotSize" class="form-label">Size of Plot</label>
+                    <input type="number" class="form-control" id="plotSize" required>
+                </div>
+                <div class="mb-3">
+                    <label for="requestor" class="form-label">Requestor</label>
+                    <input type="text" class="form-control" id="requestor" required>
+                </div>
+                
+                <h4>Specifics of Trial</h4>
+                <div class="mb-3">
+                    <label for="startDate" class="form-label">Date of Commencement</label>
+                    <input type="date" class="form-control" id="startDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="duration" class="form-label">Duration (days)</label>
+                    <input type="number" class="form-control" id="duration" required>
+                </div>
+                <div class="mb-3">
+                    <label for="vacationDate" class="form-label">Expected Date of Vacation</label>
+                    <input type="date" class="form-control" id="vacationDate" required>
+                </div>
+                <div class="mb-3">
+                    <label for="trialTitle" class="form-label">Brief Title of Trial</label>
+                    <input type="text" class="form-control" id="trialTitle" required>
+                </div>
+                
+                <h4>Proposed Usage</h4>
+                <div class="mb-3">
+                    <label for="agrochemicals" class="form-label">Proposed Agrochemical Use</label>
+                    <input type="text" class="form-control" id="agrochemicals" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fertilizer" class="form-label">Proposed Fertilizer Use</label>
+                    <input type="text" class="form-control" id="fertilizer" required>
+                </div>
+                
+                <h4>Irrigation Needs</h4>
+                <div class="mb-3">
+                    <label for="irrigationDuration" class="form-label">Duration</label>
+                    <input type="text" class="form-control" id="irrigationDuration" required>
+                </div>
+                <div class="mb-3">
+                    <label for="irrigationFrequency" class="form-label">Frequency (days)</label>
+                    <input type="number" class="form-control" id="irrigationFrequency" required>
+                </div>
+                <div class="mb-3">
+                    <label for="irrigationIntensity" class="form-label">Intensity (mm)</label>
+                    <input type="number" class="form-control" id="irrigationIntensity" required>
+                </div>
+                
+                <h4>Special Requirements</h4>
+                <div class="mb-3">
+                    <label for="specialRequirements" class="form-label">Describe Special Requirements</label>
+                    <textarea class="form-control" id="specialRequirements" rows="3" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100">Submit Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-auto">
+        <p>© 2025 IITA RFU. All Rights Reserved.</p>
+        <div>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Contact Us</a>
+        </div>
+      </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.getElementById("requestForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent actual form submission
+            
+            Swal.fire({
+                title: "Success!",
+                text: "Your land allocation request has been submitted.",
+                icon: "success",
+                confirmButtonText: "OK"
+            }).then(() => {
+                window.location.href = "dashboard.html"; // Redirect to home page
+            });
+
+            this.reset(); // Clear the form fields
+        });
+    </script>
+
+</body>
+</html>
