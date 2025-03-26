@@ -6,3 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.getElementById("logoutBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link action
+    window.location.href = "index.html"; // Redirect to the login page
+});
