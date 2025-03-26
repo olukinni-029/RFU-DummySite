@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Simulated data for user requests (Replace with backend data)
-    const userRequests = [
+    const userRequests = JSON.parse(localStorage.getItem("userRequests")) || [
         {
             email: "user1@example.com",
             project: "Project Alpha",
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", function () {
             specialRequirements: "None",
             location: "Farm A",
             status: "Pending",
-            allocatedLand: "N/A",
         },
         {
             email: "user2@example.com",
@@ -43,63 +41,98 @@ document.addEventListener("DOMContentLoaded", function () {
             specialRequirements: "Organic Only",
             location: "Farm B",
             status: "Pending",
-            allocatedLand: "N/A",
         }
     ];
 
     const tableBody = document.getElementById("requestTableBody");
 
-    // Populate the table with user requests
+    function saveUserRequests() {
+        localStorage.setItem("userRequests", JSON.stringify(userRequests));
+    }
+
     function loadUserRequests() {
-        tableBody.innerHTML = ""; // Clear table before populating
+        tableBody.innerHTML = "";
         userRequests.forEach((request, index) => {
             const row = document.createElement("tr");
-
             row.innerHTML = `
                 <td>${request.email}</td>
                 <td>${request.project}</td>
                 <td>${request.season}</td>
                 <td>${request.year}</td>
-                <td>${request.budget}</td>
+                 <td>${request.budget}</td>
                 <td>${request.landSize}</td>
-                <td>${request.requestor}</td>
-                <td>${request.startDate}</td>
-                <td>${request.duration}</td>
-                <td>${request.expectedVacation}</td>
-                <td>${request.trialTitle}</td>
-                <td>${request.agrochemicals}</td>
-                <td>${request.fertilizer}</td>
-                <td>${request.irrigationDuration}</td>
-                <td>${request.irrigationFrequency}</td>
-                <td>${request.irrigationIntensity}</td>
-                <td>${request.specialRequirements}</td>
-                <td>${request.location}</td>
-                <td><span class="status ${request.status.toLowerCase()}">${request.status}</span></td>
-                <td>${request.allocatedLand}</td>
+                 <td>${request.requestor}</td>
+                 <td>${request.startDate}</td>
+                 <td>${request.duration}</td>
+                 <td>${request.expectedVacation}</td>
+                 <td>${request.trialTitle}</td>
+                 <td>${request.agrochemicals}</td>
+                 <td>${request.fertilizer}</td>
+                 <td>${request.irrigationDuration}</td>
+               <td>${request.irrigationFrequency}</td>
+                 <td>${request.irrigationIntensity}</td>
+                 <td>${request.specialRequirements}</td>
+                 <td>${request.location}</td>
+                <td><span id="status-${index}" class="status ${request.status.toLowerCase()}">${request.status}</span></td>
                 <td>
-                    <button class="btn btn-success btn-sm" onclick="approveRequest(${index})">Approve</button>
+                    <button class="btn btn-primary btn-sm" onclick="allocateField(${index})">Allocate</button>
+                </td>
+                <td>
+                    <button id="approve-btn-${index}" class="btn btn-success btn-sm" onclick="approveRequest(${index})" ${request.status === "Approved" ? "disabled" : ""}>
+                        ${request.status === "Approved" ? "Approved" : "Approve"}
+                    </button>
                 </td>
             `;
             tableBody.appendChild(row);
         });
     }
 
-    // Redirect to land allocation page when "Approve" is clicked
     window.approveRequest = function (index) {
+        Swal.fire({
+            title: "Approve Request?",
+            text: `Are you sure you want to approve ${userRequests[index].requestor}'s request?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#198754",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, Approve"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                userRequests[index].status = "Approved";
+                saveUserRequests();
+
+                // Update the button text in the table
+                const approveButton = document.querySelector(`#approve-btn-${index}`);
+                if (approveButton) {
+                    approveButton.textContent = "Approved";
+                    approveButton.classList.remove("btn-success"); // Remove green color
+                    approveButton.classList.add("btn-secondary"); // Change to gray
+                    approveButton.disabled = true;
+                }
+
+                // Change the status text in the table
+                const statusCell = document.querySelector(`#status-${index}`);
+                if (statusCell) {
+                    statusCell.textContent = "Approved";
+                    statusCell.classList.remove("pending");
+                    statusCell.classList.add("approved");
+                }
+
+                Swal.fire("Approved!", "The request has been approved.", "success");
+            }
+        });
+    };
+
+    window.allocateField = function (index) {
         const selectedRequest = userRequests[index];
 
-        // Redirect to land allocation page with user details in the URL
+        if (!selectedRequest.email || !selectedRequest.project) {
+            Swal.fire("Error", "Invalid request details.", "error");
+            return;
+        }
+
         window.location.href = `land_allocation.html?email=${encodeURIComponent(selectedRequest.email)}&project=${encodeURIComponent(selectedRequest.project)}&landSize=${encodeURIComponent(selectedRequest.landSize)}&requestor=${encodeURIComponent(selectedRequest.requestor)}&location=${encodeURIComponent(selectedRequest.location)}`;
     };
 
-    // Show different sections on sidebar click
-    window.showSection = function (sectionId) {
-        document.querySelectorAll(".main-content").forEach(section => {
-            section.style.display = "none";
-        });
-        document.getElementById(sectionId).style.display = "block";
-    };
-
-    // Load requests when page loads
     loadUserRequests();
 });
